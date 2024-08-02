@@ -8,12 +8,15 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://mehta-chatapp.vercel.app/",
+    origin: "https://mehta-chatapp.vercel.app",
     methods: ["GET", "POST"],
   },
 });
 
-app.use(cors());
+app.use(cors({
+  origin: "https://mehta-chatapp.vercel.app",
+  methods: ["GET", "POST"],
+}));
 
 const users = {}; // To keep track of users and their IDs
 
@@ -36,7 +39,7 @@ io.on("connection", (socket) => {
 });
 
 // Run the server
-const PORT = 5000;
+const PORT =  process.env.PORT ||  5000;
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
